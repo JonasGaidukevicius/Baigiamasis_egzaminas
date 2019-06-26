@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,6 +19,7 @@ import lt.akademijait.warehouse.customer.model.Customer;
 import lt.akademijait.warehouse.customer.model.CustomerData;
 import lt.akademijait.warehouse.customer.model.CustomerType;
 import lt.akademijait.warehouse.inventory.model.Inventory;
+import lt.akademijait.warehouse.inventory.service.InventoryRepository;
 import lt.akademijait.warehouse.security.payload.ApiResponse;
 
 @Service
@@ -28,7 +30,7 @@ public class CustomerService {
 	private CustomerRepository customerRepository;
 
 	//@Autowired
-	//private CountryRepository countryRepository;
+	private InventoryRepository inventoryRepository;
 
 	// Visų klientų nuskaitymas
 	@Transactional(readOnly = true)
@@ -132,6 +134,11 @@ public class CustomerService {
 					HttpStatus.BAD_REQUEST);
 		}*/
 		
+		if (customerRepository.existsByFirstNameAndLastNameAndBirthday(firstName, lastName, birthday)) {
+			return new ResponseEntity<>(new ApiResponse(false, "Klientas su tokiu vardu, pavarde ir gimtadieniu jau egzistuoja"),
+					HttpStatus.BAD_REQUEST);
+		}
+		
 		
 		
 		//1.Sugeneruoju atsitiktinę eilutę iš 7 simbolių
@@ -190,37 +197,37 @@ public class CustomerService {
 	
 	
 	
-	// Vienos šventės šalių nuskaitymas
-	/*@Transactional(readOnly = true)
-	public List<String> getHolidayCountries(String code) {
-		Customer currentHoliday = customerRepository.findHolidayByCode(code);
+	// Vieno kliento inventoriaus nuskaitymas
+	@Transactional(readOnly = true)
+	public List<String> getCustomerInventories(String customerCode) {
+		Customer currentCustomer = customerRepository.findByCustomerCode(customerCode);
 		//Holiday currentHoliday = holidayRepository.findHolidayByTitle(holidayTitle);
 
-		return currentHoliday.getCountries().stream().map((country) -> country.getTitle()).collect(Collectors.toList());
+		return currentCustomer.getInventories().stream().map((inventory) -> inventory.getInventoryTitle()).collect(Collectors.toList());
 
 	}
 
-	// Šalių priskyrimas šventei
+	// Inventoriaus priskyrimas klintui
 	@Transactional
-	public void addCountryToHoliday(String code, List<String> countryList) {
-		Customer currentHoliday = customerRepository.findHolidayByCode(code);
-		List<Inventory> alreadyAddedCountryList = currentHoliday.getCountries();
-		List<String> alreadyAddedCountryStringList = alreadyAddedCountryList.stream()
-				.map((country) -> country.getTitle()).collect(Collectors.toList());
-		for (String country : countryList) {
-			if (!alreadyAddedCountryStringList.contains(country)) {
-				Inventory countryToAdd = countryRepository.findCountryByTitle(country);
-				currentHoliday.addCountry(countryToAdd);
-				log.info("Country (" + countryToAdd.getTitle() + ") was added to holiday (" + currentHoliday.getTitle()
-						+ ")");
+	public void addInventoryToCustomer(String customerCode, List<String> inventoryList) {
+		Customer currentCustomer = customerRepository.findByCustomerCode(customerCode);
+		List<Inventory> alreadyAddedInventoryList = currentCustomer.getInventories();
+		List<String> alreadyAddedInventoryStringList = alreadyAddedInventoryList.stream()
+				.map((inventory) -> inventory.getInventoryTitle()).collect(Collectors.toList());
+		for (String inventory : inventoryList) {
+			if (!alreadyAddedInventoryStringList.contains(inventory)) {
+				Inventory inventoryToAdd = inventoryRepository.findByInventoryTitle(inventory);
+				currentCustomer.addInventory(inventoryToAdd);
+				log.info("Inventory (" + inventoryToAdd.getInventoryTitle() + ") was added to customer (" +
+				currentCustomer.getFirstName() + " " + currentCustomer.getLastName() + ")");
 			}
 		}
-		customerRepository.save(currentHoliday);
+		customerRepository.save(currentCustomer);
 		return;
 	}
 
 	// Šalių pašalinimas iš šventės
-	@Transactional
+	/*@Transactional
 	public void removeCountryFromHoliday(String code, List<String> countryList) {
 
 		//Holiday currentHoliday = holidayRepository.findHolidayByTitle(title);

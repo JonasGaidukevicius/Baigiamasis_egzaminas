@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import './styles.css';
 
 const OneCustomerComponent = (props) => {
-    let optionAddedCountryList = props.addedCountries.map(v => (
+    let optionAddedInventoryList = props.addedInventory.map(v => (
         <option key={v}>{v}</option>
     ));
     return (
@@ -41,24 +41,24 @@ const OneCustomerComponent = (props) => {
                         <Link to={`/`} className="btn btn-dark mt-3">Atgal</Link>
                     </div>
                 </div>
-                <div className="col-md-3 col-lg-3">
-                    <p>Jau priskirtos šalys</p>
+                <div className="col-md-5 col-lg-5">
+                    <p>Turimas inventorius</p>
                     <select className="form-control rounded"
                           multiple
                           size="5"
                           onChange={props.countryRemovingHandler}>
-                        {optionAddedCountryList}
+                        {optionAddedInventoryList}
                     </select>
-                    <button className="btn btn-primary" onClick={props.removeCountriesFromHoliday}>Pašalinti šalis</button>&nbsp;
+                    <button className="btn btn-primary" onClick={props.removeCountriesFromHoliday}>Pašalinti inventorių</button>&nbsp;
 
-                    <p>Esamos šalys šalys</p>
+                    <p>Visas esamas inventorius</p>
                     <select className="form-control rounded"
                           multiple
                           size="5"
                           onChange={props.availableCountrySelectionHandler}>
-                        {props.showAvailableCountries()}
+                        {props.showAvailableInventory()}
                     </select>
-                    <button className="btn btn-primary" onClick={props.addCountriesToHoliday}>Pridėti šalis</button>&nbsp;
+                    <button className="btn btn-primary" onClick={props.addCountriesToHoliday}>Pridėti inventorių</button>&nbsp;
                 </div>
             </div>
         </div>

@@ -9,12 +9,12 @@ var NavigationComponent = (props) => {
                     <li className="nav-item">
                         <Link to='/' className="btn btn-success">Home</Link> &nbsp;
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <Link to='/admin/holidays' className="btn btn-success">Holiday administration</Link> &nbsp;
                     </li>
                     <li className="nav-item">
                         <Link to='/admin/countries' className="btn btn-success">Country administration</Link> &nbsp;
-                    </li>
+                    </li> */}
                     {/* Login mygtukas yra nereikalingas
                     <li className="nav-item">
                         <Link to='/login' className="btn btn-success">Login</Link> &nbsp;
@@ -27,12 +27,12 @@ var NavigationComponent = (props) => {
                     <li className="nav-item">
                         <button className="btn btn-danger" onClick={props.onClickLogoutHandler}>Logout</button>&nbsp;
                     </li>
-                    <li className="nav-item">
+                    {/* <li className="nav-item">
                         <Link to='/newUser' className="btn btn-primary">Create new user</Link> &nbsp;
                     </li>
                     <li className="nav-item">
                         <Link to='/admin/carts' className="btn btn-info">Cart administration</Link> &nbsp;
-                    </li>
+                    </li> */}
                 </ul>
 
                 {/* <form className="form-inline">

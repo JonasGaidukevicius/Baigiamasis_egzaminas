@@ -41,9 +41,9 @@ public class Customer {
 	private CustomerType customerType;
 	
 	// Dabartinis veikiantis variantas, kai čia ne savininko pusė
-	/*@JsonIgnore
+	@JsonIgnore
 	@ManyToMany(mappedBy = "customers", cascade = CascadeType.ALL)
-	private List<Inventory> inventories = new ArrayList<>();*/
+	private List<Inventory> inventories = new ArrayList<>();
 	
 	
 
@@ -121,29 +121,29 @@ public class Customer {
 		this.customerType = customerType;
 	}
 
-	/*public List<Inventory> getInventories() {
+	public List<Inventory> getInventories() {
 		return inventories;
 	}
 
 	public void setInventories(List<Inventory> inventories) {
 		this.inventories = inventories;
-	}*/
+	}
 
 ////////////////////////////////////////////////////////////////////////////////////
 
 	/*public void setCountries(List<Country> countries) {
 		this.countries = countries;
-	}
-	
-	public void addCountry(Country country) {
-		this.countries.add(country);
-		country.getHolidays().add(this);
-	}
-	
-	public void removeCountry(Country country) {
-		this.countries.remove(country);
-		country.getHolidays().remove(this);
 	}*/
+	
+	public void addInventory(Inventory inventory) {
+		this.inventories.add(inventory);
+		inventory.getCustomers().add(this);
+	}
+	
+	public void removeInventory(Inventory inventory) {
+		this.inventories.remove(inventory);
+		inventory.getCustomers().remove(this);
+	}
 	
 	
 	

@@ -1,5 +1,6 @@
 package lt.akademijait.warehouse.inventory.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +24,15 @@ public class Inventory {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	@Column (unique=true, nullable=false)
-	private String countryCode;
+	private String inventoryCode;
 	@Column(unique=true, nullable=false) 
-	private String title;
+	private String inventoryTitle;
 	@Column
-	private String image;
+	private double inventoryWeigth;
 	@Column
-	private String president;
+	private int inventorySector;
+	@Column
+	private LocalDate dateOfPlacement;
 
 	// senasis apjungimo -> čia yra ne savininkas
 	// @ManyToMany(mappedBy="countries")
@@ -38,8 +41,9 @@ public class Inventory {
 	// Dabartinis veikiantis variantas, kai čia yra savininko pusė
 	@JsonIgnore
 	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.DETACH })
-	@JoinTable(name = "holiday_country", joinColumns = @JoinColumn(name = "country_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "holiday_id", referencedColumnName = "id"))
-	List<Customer> holidays = new ArrayList<>();
+	@JoinTable(name = "customer_inventory", joinColumns = @JoinColumn(name = "inventory_id", referencedColumnName = "id"),
+				inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
+	List<Customer> customers = new ArrayList<>();
 
 	//@OneToOne(cascade = {CascadeType.ALL}) // MERGE, CascadeType.DETACH})
 	//private ProductDetails productDetails;
@@ -51,19 +55,14 @@ public class Inventory {
 	}
 
 	//konstruktorius be id
-	public Inventory(String countryCode, String title, String image, String president) {
-		this.countryCode = countryCode;
-		this.title = title;
-		this.image = image;
-		this.president = president;
-	}
-
-	public String getCountryCode() {
-		return countryCode;
-	}
-
-	public void setCountryCode(String countryCode) {
-		this.countryCode = countryCode;
+	public Inventory(String inventoryCode, String inventoryTitle, double inventoryWeigth, int inventorySector,
+			LocalDate dateOfPlacement) {
+		super();
+		this.inventoryCode = inventoryCode;
+		this.inventoryTitle = inventoryTitle;
+		this.inventoryWeigth = inventoryWeigth;
+		this.inventorySector = inventorySector;
+		this.dateOfPlacement = dateOfPlacement;	
 	}
 
 	public long getId() {
@@ -74,37 +73,61 @@ public class Inventory {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getInventoryCode() {
+		return inventoryCode;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setInventoryCode(String inventoryCode) {
+		this.inventoryCode = inventoryCode;
 	}
 
-	public String getImage() {
-		return image;
+	public String getInventoryTitle() {
+		return inventoryTitle;
 	}
 
-	public void setImage(String image) {
-		this.image = image;
+	public void setInventoryTitle(String inventoryTitle) {
+		this.inventoryTitle = inventoryTitle;
 	}
 
-	public String getPresident() {
-		return president;
+	public double getInventoryWeigth() {
+		return inventoryWeigth;
 	}
 
-	public void setPresident(String president) {
-		this.president = president;
+	public void setInventoryWeigth(double inventoryWeigth) {
+		this.inventoryWeigth = inventoryWeigth;
 	}
 
-	public List<Customer> getHolidays() {
-		return holidays;
+	public int getInventorySector() {
+		return inventorySector;
 	}
 
-	public void setHolidays(List<Customer> holidays) {
-		this.holidays = holidays;
+	public void setInventorySector(int inventorySector) {
+		this.inventorySector = inventorySector;
 	}
+
+	public LocalDate getDateOfPlacement() {
+		return dateOfPlacement;
+	}
+
+	public void setDateOfPlacement(LocalDate dateOfPlacement) {
+		this.dateOfPlacement = dateOfPlacement;
+	}
+
+	public List<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
+	
+	
+	
+	
+	
+
+
+	
 	
 	/*public void addHoliday(Customer customer) {
 		this.holidays.add(customer);

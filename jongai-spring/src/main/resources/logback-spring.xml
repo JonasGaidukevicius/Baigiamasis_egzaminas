@@ -43,12 +43,12 @@
         <appender-ref ref="STDOUT" />
     </root>
 
-    <logger name="${BASEPCKG}.holidays.service.HolidayService" level="info" additivity="false">
+    <logger name="${BASEPCKG}.customer.service.CustomerService" level="info" additivity="false">
         <appender-ref ref="LOGFILE" />
         <appender-ref ref="STDOUT" />
     </logger>
     
-    <logger name="${BASEPCKG}.countries.service.CountryService" level="info" additivity="false">
+    <logger name="${BASEPCKG}.inventory.service.InventoryService" level="info" additivity="false">
         <appender-ref ref="LOGFILE" />
         <appender-ref ref="STDOUT" />
     </logger>

@@ -14,8 +14,8 @@ class OneCustomerContainer extends React.Component {
       phoneNumber: "",
       customerType: '',
       
-      addedCountries: [],
-      allCountries: [],
+      addedInventory: [],
+      allInventory: [],
       countriesToAdd: [],
       countriesToRemove: []
     }; 
@@ -40,6 +40,8 @@ class OneCustomerContainer extends React.Component {
 
   componentDidMount() {
     this.getOneCustomer();
+    this.getCustomerInventoryList();
+    this.getInventoryList();
     
     // TODO kitus dalykus nuskaityti 
 
@@ -74,21 +76,23 @@ class OneCustomerContainer extends React.Component {
       });
   }
 
-  getHolidayCountryList() {
-    const position = this.props.match.params.code;
-    axios.get('http://localhost:8080/api/holidays/' + position + '/addedCountries')
+  getCustomerInventoryList() {
+    const position = this.props.match.params.customerCode;
+    axios.get('http://localhost:8080/api/customers/' + position + '/addedInventory')
       .then((response) => {
-        this.setState({ addedCountries: response.data })
+        this.setState({ addedInventory: response.data })
       })
       .catch((error) => {
         console.log(error);
       });
   }
 
-  getCountryList() {
-    axios.get('http://localhost:8080/api/countries')
+  getInventoryList() {
+    axios.get('http://localhost:8080/api/inventories')
       .then((response) => {
-        this.setState({ allCountries: response.data.map(item => item.title) })
+        this.setState({ allInventory: response.data.map(item => item.inventoryTitle) });
+        console.log("Visas inventorius yra:");
+        console.log(this.state.allInventory);
       })
       .catch((error) => {
         console.log(error);
@@ -96,36 +100,36 @@ class OneCustomerContainer extends React.Component {
   }
 
   availableCountrySelectionHandler = event => {
-    this.setState({ countriesToAdd: [...event.target.selectedOptions].map(o => o.value) })
+    this.setState({ countriesToAdd: [...event.target.selectedOptions].map(o => o.value) });
   }
 
   countryRemovingHandler = event => {
-    this.setState({ countriesToRemove: [...event.target.selectedOptions].map(o => o.value) })
+    this.setState({ countriesToRemove: [...event.target.selectedOptions].map(o => o.value) });
   }
 
-  showAvailableCountries = () => {
-    if (this.state.allCountries.length === 0) {
+  showAvailableInventory = () => {
+    if (this.state.allInventory.length === 0) {
       return (
         <option value="" disabled>
-          Nėra šalių pasirinkimui
+          Nėra inventoriaus pasirinkimui
             </option>
       );
     } else {
-      let countries = this.state.allCountries
-        .map((country, index) => {
+      let inventories = this.state.allInventory
+        .map((inventory, index) => {
 
           let isShown = true;
 
-          this.state.addedCountries.forEach((c, index) => {
-            if (c === country) {
+          this.state.addedInventory.forEach((c, index) => {
+            if (c === inventory) {
               isShown = false;
             }
           });
 
           if (isShown)
             return (
-              <option key={country + index} value={country}>
-                {country}
+              <option key={inventory + index} value={inventory}>
+                {inventory}
               </option>
             );
           else {
@@ -133,20 +137,20 @@ class OneCustomerContainer extends React.Component {
           }
         })
         .filter(c => c !== null);
-      if (countries.length === 0) {
+      if (inventories.length === 0) {
         return (
           <option value="" disabled>
-            Visos šalys jau pasirinktos
+            Visas inventorius jau pasirinktas
               </option>
         );
-      } else return countries;
+      } else return inventories;
     }
   };
 
-  addCountriesToHoliday = event => {
-    const position = this.props.match.params.code;
-    axios.put('http://localhost:8080/api/holidays/' + position + '/addingCountries', this.state.countriesToAdd)
-      .then(() => this.getHolidayCountryList())
+  addInventoryToCuctomer = event => {
+    const position = this.props.match.params.customerCode;
+    axios.put('http://localhost:8080/api/customers/' + position + '/addingInventory', this.state.countriesToAdd)
+      .then(() => this.getCustomerInventoryList())
       .catch(function (error) {
         console.log(error);
       });
@@ -155,7 +159,7 @@ class OneCustomerContainer extends React.Component {
   removeCountriesFromHoliday = event => {
     const position = this.props.match.params.code;
     axios.put('http://localhost:8080/api/holidays/' + position + '/removingCountries', this.state.countriesToRemove)
-      .then(() => this.getHolidayCountryList())
+      .then(() => this.getCustomerInventoryList())
       .catch(function (error) {
         console.log(error);
       });
@@ -174,11 +178,11 @@ class OneCustomerContainer extends React.Component {
             customerType={this.state.customerType}
             
             
-            addedCountries={this.state.addedCountries}
-            allCountries={this.state.allCountries}
-            showAvailableCountries={this.showAvailableCountries}
+            addedInventory={this.state.addedInventory}
+            allCountries={this.state.allInventory}
+            showAvailableInventory={this.showAvailableInventory}
             availableCountrySelectionHandler={this.availableCountrySelectionHandler}
-            addCountriesToHoliday={this.addCountriesToHoliday}
+            addCountriesToHoliday={this.addInventoryToCuctomer}
             removeCountriesFromHoliday={this.removeCountriesFromHoliday}
             countryRemovingHandler={this.countryRemovingHandler}
           />

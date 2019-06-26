@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RestController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lt.akademijait.warehouse.countries.service.CountryService;
 import lt.akademijait.warehouse.customer.model.HolidayData;
 import lt.akademijait.warehouse.customer.model.CustomerData;
 import lt.akademijait.warehouse.customer.service.CustomerService;
 import lt.akademijait.warehouse.inventory.model.Inventory;
+import lt.akademijait.warehouse.inventory.service.InventoryService;
 
 @RestController
 @Api(value = "customer")
@@ -82,7 +82,7 @@ public class CustomerController {
 					ccc.getCustomerType());
 		}
 
-	// klineto atnaujinimas
+	// kliento atnaujinimas
 	@RequestMapping(path = "/{customerCode}", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Edit customer", notes = "Change selected customer's data")
@@ -110,32 +110,32 @@ public class CustomerController {
 	// Čia tolimesnis tarpusavio ryšių kodas 
 	
 	
-	// Vienos šventės šalių nuskaitymas
-	/*@RequestMapping(path = "/{code}/addedCountries", method = RequestMethod.GET)
+	// Vieno kliento inventoriaus nuskaitymas
+	@RequestMapping(path = "/{customerCode}/addedInventory", method = RequestMethod.GET)
 	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation(value = "Vienos šventės šalių gavimas", notes = "Kokioms šalims priskirta šventė")
-	public List<String> getHolidayCountries(
-			@ApiParam(value = "Holiday title", required = true)
-			@PathVariable final String code) {
-		return customerService.getHolidayCountries(code);
+	@ApiOperation(value = "Vieno kliento inventoriaus gavimas", notes = "")
+	public List<String> getCustomerInventories(
+			@ApiParam(value = "Customer code", required = true)
+			@PathVariable final String customerCode) {
+		return customerService.getCustomerInventories(customerCode);
 	}
 	
-	//Šalių pridėjimas šventei
-	@RequestMapping(path = "/{code}/addingCountries", method = RequestMethod.PUT)
+	//Inventoriaus pridėjimas klientui
+	@RequestMapping(path = "/{customerCode}/addingInventory", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation(value = "Šalių šventei pridėjimas", notes = "Pažymėtų šalių pridėjimas šventei")
+	@ApiOperation(value = "Inventoriaus klientui pridėjimas", notes = "Pažymėto inventoriaus pridėjimas klientui")
 	public void addCountriesToHoliday(
-			@ApiParam(value = "Holiday title", required = true)
-			@PathVariable final String code,
-			@ApiParam(value = "Countries list", required = true)
-			@Valid @RequestBody final List<String> countryList) {
+			@ApiParam(value = "Customer code", required = true)
+			@PathVariable final String customerCode,
+			@ApiParam(value = "Inventory list", required = true)
+			@Valid @RequestBody final List<String> inventoryList) {
 		
-		customerService.addCountryToHoliday(code, countryList);
+		customerService.addInventoryToCustomer(customerCode, inventoryList);
 		return;
 	}
 	
 	//Šalių pašalinimas iš šventės
-	@RequestMapping(path = "/{code}/removingCountries", method = RequestMethod.PUT)
+	/*@RequestMapping(path = "/{code}/removingCountries", method = RequestMethod.PUT)
 	@ResponseStatus(HttpStatus.OK)
 	@ApiOperation(value = "Šalių pašalinimas iš šventės", notes = "Pažymėtų šalių pašalinimas iš šventės")
 	public void removeCountries (
