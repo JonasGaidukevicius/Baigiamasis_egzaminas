@@ -57,7 +57,7 @@ class CustomerListContainer extends React.Component {
                         </div>
                         <div className="card-body">
                             <div className="row">
-                                <Link className="btn btn-success" to="/admin/holidays/new">Naujas klientas</Link>
+                                <Link className="btn btn-success" to="/admin/newCustomer">Naujas klientas</Link>
                             </div>
                             <div className="row">
                                 <div className="col-12">

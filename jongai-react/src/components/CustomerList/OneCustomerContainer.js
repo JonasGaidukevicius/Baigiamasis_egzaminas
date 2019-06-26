@@ -1,19 +1,19 @@
 import React from 'react';
 //import PropTypes from 'prop-types';
-import OneHolidayComponent from './OneHolidayComponent';
+import OneCustomerComponent from './OneCustomerComponent';
 import axios from 'axios';
 
-class OneHolidayContainer extends React.Component {
+class OneCustomerContainer extends React.Component {
   constructor(props, context) {
     super(props, context);
     this.state = {
-      code: "",
-      title: "",
-      image: "",
-      description: '',
-      type: '',
-      flag: false,
-      simpleDate: '',
+      customerCode: "",
+      firstName: "",
+      lastName: '',
+      birthday: '',
+      phoneNumber: "",
+      customerType: '',
+      
       addedCountries: [],
       allCountries: [],
       countriesToAdd: [],
@@ -39,27 +39,31 @@ class OneHolidayContainer extends React.Component {
   //   }
 
   componentDidMount() {
-    this.getOneHoliday();
-    this.getHolidayCountryList();
-    this.getCountryList();
+    this.getOneCustomer();
+    
+    // TODO kitus dalykus nuskaityti 
+
+    //this.getHolidayCountryList();
+    //this.getCountryList();
   }
 
-  getOneHoliday() {
-    const position = this.props.match.params.code;
-    axios.get('http://localhost:8080/api/holidays/' + (position))
+  getOneCustomer() {
+    const position = this.props.match.params.customerCode;
+    axios.get('http://localhost:8080/api/customers/' + (position))
       .then((response) => {
         //this.setState(response.data);
         console.log("-----------------Response data id yra: " + response.data.id);
         console.log("-----------------Response data title yra: " + response.data.title);
         console.log("-----------------Response data simpleDate yra: " + response.data.simpleDate);
         this.setState({
-          code: response.data.code,
-          title: response.data.title,
-          image: response.data.image,
-          description: response.data.description,
-          type: response.data.type,
-          flag: response.data.flag,
-          simpleDate: response.data.simpleDate
+          customerCode: response.data.customerCode,
+          firstName: response.data.firstName,
+          lastName: response.data.lastName,
+          birthday: response.data.birthday,
+          phoneNumber: response.data.phoneNumber,
+          customerType: response.data.customerType
+        
+          
 
           // addedCountries: response.data.countries
           // aš galėčiau čia jau turėti visas šventės šalis, nes po @JsonIgnore galiu Listą iškart turėti prie šalies objekto
@@ -158,17 +162,18 @@ class OneHolidayContainer extends React.Component {
   }
 
   render() {
-    if (this.state.code) {
+    if (this.state.customerCode) {
       return (
         <div>
-          <OneHolidayComponent
-            code={this.state.code}
-            title={this.state.title}
-            image={this.state.image}
-            description={this.state.description}
-            type={this.state.type}
-            flag={this.state.flag === true ? "Yes" : "No"}
-            simpleDate={this.state.simpleDate}
+          <OneCustomerComponent
+            customerCode={this.state.customerCode}
+            firstName={this.state.firstName}
+            lastName={this.state.lastName}
+            birthday={this.state.birthday}
+            phoneNumber={this.state.phoneNumber}
+            customerType={this.state.customerType}
+            
+            
             addedCountries={this.state.addedCountries}
             allCountries={this.state.allCountries}
             showAvailableCountries={this.showAvailableCountries}
@@ -191,4 +196,4 @@ class OneHolidayContainer extends React.Component {
   }
 }
 
-export default OneHolidayContainer;
+export default OneCustomerContainer;

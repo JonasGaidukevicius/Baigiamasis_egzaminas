@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import './styles.css';
 
-const OneHolidayComponent = (props) => {
+const OneCustomerComponent = (props) => {
     let optionAddedCountryList = props.addedCountries.map(v => (
         <option key={v}>{v}</option>
     ));
@@ -12,42 +12,33 @@ const OneHolidayComponent = (props) => {
             <div className="row">
                 <div className="col-md-2 col-lg-2">
                     <div className="row">
-                        <h5>Holiday's picture:</h5>
+                        <h5>Kliento vardas</h5>
                     </div>
                     <div className="row">
-                        <img src={"/img/holidays/" + props.image} alt="Holiday_picture" width="150px"></img>
+                        <p>{props.firstName} {props.lastName}</p>
                     </div>
                 </div>
                 <div className="col-md-3 col-lg-3">
                     <div className="row">
-                        <h5>Holiday's title:</h5>
+                        <h5>Kliento gimtadienis:</h5>
                     </div>
                     <div className="row pabraukti" >
-                        <p>{props.title}</p>
+                        <p>{props.birthday}</p>
                     </div>
                     <div className="row">
-                        <h5>Holiday's description:</h5>
+                        <h5>Telefono numeris:</h5>
                     </div>
                     <div className="row pabraukti">
-                        <p>{props.description}</p>
+                        <p>{props.phoneNumber}</p>
                     </div>
                     <div className="row">
-                        <h5>Holiday's type:</h5>
+                        <h5>Kliento tipas:</h5>
                     </div>
                     <div className="row pabraukti">
-                        <p>{props.type}</p>
+                        <p>{props.customerType}</p>
                     </div>
                     <div className="row">
-                        <h5>Raise flag:</h5>
-                    </div>
-                    <div className="row pabraukti">
-                        <p>{props.flag}</p>
-                    </div>
-                    <div className="row pabraukti">
-                        <p>{props.simpleDate}</p>
-                    </div>
-                    <div className="row">
-                        <Link to={`/`} className="btn btn-dark mt-3">Back</Link>
+                        <Link to={`/`} className="btn btn-dark mt-3">Atgal</Link>
                     </div>
                 </div>
                 <div className="col-md-3 col-lg-3">
@@ -85,4 +76,4 @@ OneProductComponent.propTypes = {
 };*/
 
 
-export default OneHolidayComponent;
+export default OneCustomerComponent;

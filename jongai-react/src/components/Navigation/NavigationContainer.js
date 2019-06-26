@@ -2,17 +2,9 @@ import React from 'react';
 import NavigationComponent from './NavigationComponent';
 import { Route, BrowserRouter, Switch } from "react-router-dom";
 import CustomerListContainer from '../CustomerList/CustomerListContainer';
-import OneHolidayContainer from '../HolidayList/OneHolidayContainer';
-import HolidayAdministrationListContainer from '../HolidayAdministration/HolidayAdministrationListContainer';
-import CountryAdministrationContainer from '../CountryAdministration/CountryAdministrationListContainer';
-import NewHolidayContainer from '../HolidayAdministration/NewHolidayContainer';
-import EditHolidayContainer from '../HolidayAdministration/EditHolidayContainer';
-import NewCountryContainer from '../CountryAdministration/NewCountryContainer';
-import EditCountryContainer from '../CountryAdministration/EditCountryContainer';
-import OneCountryContainer from '../CountryList/OneCountryContainer';
-import NewUserContainer from '../UserAdministration/NewUserContainer';
-import CartAdministrationListContainer from '../CartAdministration/CartAdministrationListContainer';
-import NewCartContainer from '../CartAdministration/NewCartContainer';
+import NewCustomerContainer from '../CustomerAdministration/NewCustomerContainer';
+import OneCustomerContainer from '../CustomerList/OneCustomerContainer';
+
 
 class NavigationContainer extends React.Component {
     //constructor(props) {
@@ -42,7 +34,18 @@ class NavigationContainer extends React.Component {
                         )}
                         exact
                         />
-                        <Route path="/holidays/:code" render={props => (
+                        <Route path="/admin/newCustomer" render={props => (
+                            <NewCustomerContainer {...props} />
+                        )}
+                        exact
+                        />
+                        <Route path="/customers/:customerCode" render={props => (
+                            <OneCustomerContainer {...props} />
+                        )}
+                        exact
+                        />
+                        
+                        {/* <Route path="/holidays/:code" render={props => (
                             <OneHolidayContainer {...props} />
                         )}
                         exact
@@ -96,7 +99,7 @@ class NavigationContainer extends React.Component {
                             <NewCartContainer {...props} />
                         )}
                         exact
-                        />
+                        /> */}
                     </Switch>    
                 </NavigationComponent>
             </BrowserRouter>
