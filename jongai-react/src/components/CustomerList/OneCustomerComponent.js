@@ -55,10 +55,10 @@ const OneCustomerComponent = (props) => {
                     <select className="form-control rounded"
                           multiple
                           size="5"
-                          onChange={props.availableCountrySelectionHandler}>
+                          onChange={props.availableInventorySelectionHandler}>
                         {props.showAvailableInventory()}
                     </select>
-                    <button className="btn btn-primary" onClick={props.addCountriesToHoliday}>Pridėti inventorių</button>&nbsp;
+                    <button className="btn btn-primary" onClick={props.addInventoryToCuctomer}>Pridėti inventorių</button>&nbsp;
                 </div>
             </div>
         </div>

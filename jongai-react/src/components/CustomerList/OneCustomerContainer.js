@@ -16,7 +16,7 @@ class OneCustomerContainer extends React.Component {
       
       addedInventory: [],
       allInventory: [],
-      countriesToAdd: [],
+      inventoryToAdd: [],
       countriesToRemove: []
     }; 
   }
@@ -99,7 +99,7 @@ class OneCustomerContainer extends React.Component {
       });
   }
 
-  availableCountrySelectionHandler = event => {
+  availableInventorySelectionHandler = event => {
     this.setState({ countriesToAdd: [...event.target.selectedOptions].map(o => o.value) });
   }
 
@@ -149,7 +149,7 @@ class OneCustomerContainer extends React.Component {
 
   addInventoryToCuctomer = event => {
     const position = this.props.match.params.customerCode;
-    axios.put('http://localhost:8080/api/customers/' + position + '/addingInventory', this.state.countriesToAdd)
+    axios.put('http://localhost:8080/api/customers/' + position + '/addingInventory', this.state.inventoryToAdd)
       .then(() => this.getCustomerInventoryList())
       .catch(function (error) {
         console.log(error);
@@ -179,10 +179,10 @@ class OneCustomerContainer extends React.Component {
             
             
             addedInventory={this.state.addedInventory}
-            allCountries={this.state.allInventory}
+            allInventory={this.state.allInventory}
             showAvailableInventory={this.showAvailableInventory}
-            availableCountrySelectionHandler={this.availableCountrySelectionHandler}
-            addCountriesToHoliday={this.addInventoryToCuctomer}
+            availableInventorySelectionHandler={this.availableInventorySelectionHandler}
+            addInventoryToCuctomer={this.addInventoryToCuctomer}
             removeCountriesFromHoliday={this.removeCountriesFromHoliday}
             countryRemovingHandler={this.countryRemovingHandler}
           />

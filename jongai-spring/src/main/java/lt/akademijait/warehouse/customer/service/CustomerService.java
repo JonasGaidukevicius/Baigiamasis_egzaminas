@@ -207,7 +207,7 @@ public class CustomerService {
 
 	}
 
-	// Inventoriaus priskyrimas klintui
+	// Inventoriaus priskyrimas klientui
 	@Transactional
 	public void addInventoryToCustomer(String customerCode, List<String> inventoryList) {
 		Customer currentCustomer = customerRepository.findByCustomerCode(customerCode);

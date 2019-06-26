@@ -35,9 +35,9 @@ const LoginComponent = ({
             </div>
             <div className="col-lg-5 px-lg-3 mt-5">
               <h1 className="text-base blue text-uppercase mb-4">
-                Sistema
+                Sandėlio sistema
               </h1>
-              <h2 className="mb-4">Sveiki sugrįžę!</h2>
+              <h2 className="mb-4">Prisijunkite</h2>
               {wrongData()}
               <form id="loginForm" className="mt-4" onSubmit={e => onSubmit(e)}>
                 <div className="form-group mb-4">
